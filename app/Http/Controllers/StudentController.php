@@ -21,19 +21,21 @@ class StudentController extends Controller
     }
 
     public function store(StoreStudentRequest $request)
-    {
-        $validated = $request->validated();
+{
+    $validated = $request->validated();
+    $validated['profile_picture'] = $this->storeProfilePicture($request);
 
-        // Store the image under storage/app/public/profile_pictures
-        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        $validated['profile_picture'] = $path;
+    $student = Student::create($validated);
 
-        $student = Student::create($validated);
+    return redirect()
+        ->route('students.show', $student->id)
+        ->with('success', 'Student registered successfully!');
+}
 
-        return redirect()
-            ->route('students.show', $student->id)
-            ->with('success', 'Student registered successfully!');
-    }
+private function storeProfilePicture($request): string
+{
+    return $request->file('profile_picture')->store('profile_pictures', 'public');
+}
 
     public function show(Student $student)
     {

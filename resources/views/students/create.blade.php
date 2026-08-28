@@ -9,7 +9,19 @@
 <span class="material-symbols-outlined mr-sm text-error" style="font-variation-settings: 'FILL' 1;">error</span>
 <div>
 <p class="font-bold font-body-md text-body-md">Registration Incomplete</p>
-<p class="font-body-md text-body-md mt-xs">Please review the highlighted fields below and ensure all mandatory information, including your profile picture, is provided.</p>
+@if ($errors->any())
+<div class="bg-error-container border-l-4 border-error text-on-error-container px-md py-md mb-xl flex items-start rounded shadow-sm max-w-4xl mx-auto">
+<span class="material-symbols-outlined mr-sm text-error" style="font-variation-settings: 'FILL' 1;">error</span>
+<div>
+<p class="font-bold font-body-md text-body-md">Registration Incomplete</p>
+<ul class="font-body-md text-body-md mt-xs list-disc list-inside">
+    @foreach ($errors->all() as $error)
+        <li>{{ $error }}</li>
+    @endforeach
+</ul>
+</div>
+</div>
+@endif
 </div>
 </div>
 @endif
@@ -139,7 +151,7 @@
 <span class="material-symbols-outlined text-[16px] mr-xs">image</span>
     [ JPG, PNG • Max 2MB ]
 </div>
-<input accept=".jpg,.jpeg,.png" class="hidden" id="file-upload" name="profile_picture" required type="file"
+<input accept=".jpg,.jpeg,.png" class="hidden" id="file-upload" name="profile_picture" type="file"
     onchange="document.getElementById('file-upload-label').textContent = this.files[0]?.name ?? 'Click to select your profile picture';">
 </div>
 @error('profile_picture') <p class="text-error text-xs mt-sm">{{ $message }}</p> @enderror

@@ -114,5 +114,11 @@
 </div>
 </footer>
 
+<script>
+    setTimeout(() => {
+        document.querySelectorAll('[role="alert"]').forEach(el => el.remove());
+    }, 5000);
+</script>
+
 </body>
 </html>
